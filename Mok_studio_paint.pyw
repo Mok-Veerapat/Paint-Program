@@ -16,7 +16,9 @@
 
 from tkinter import *
 from tkinter.ttk import *
+import time
 from tkinter import colorchooser, filedialog
+import pyautogui
 
 
 
@@ -46,11 +48,15 @@ class main:
         pass
 
     def save_file():
+        save_canvas()
         filedialog.asksaveasfilename()
         pass
 
     def Up_Down(event):
         print(event)
+
+        global x_old, y_old 
+        x_old, y_old = None, None
 
 
     def paint(event):
@@ -105,6 +111,12 @@ def Drawing_Area():
     mai_canvas.bind("<Key>",None)
     mai_canvas.pack()
 
+def save_canvas():
+    global mai_canvas
+    mai_canvas.update()
+    mai_canvas.postscript(file="file_test.png", colormode='color')
+
+
 def Button_Area():
     Button_Frame = Frame(master=window, height=900, width=100, pad=40)
     Button_Frame.configure(relief=GROOVE)
@@ -122,14 +134,14 @@ def Button_Area():
     def show_b_size(value):
        global b_size
        b_size = value
-       tell_text = "Brush size is : " +  str(b_size)[0:2].replace(".","  ") + " px"
+       tell_text = "Brush size is : " + str(b_size)[0:2].replace(".","  ") + " px"
        tell_label.config(text=tell_text)
     
     S1 = Scale(master=Button_Frame,from_=1,
-               to=40, orient=HORIZONTAL,
+               to=99, orient=HORIZONTAL,
                command=show_b_size)
     S1.grid(row=2, column=0, pady=50)
-    tell_label = Label(Button_Frame, text="Brush size is : 1   px")
+    tell_label = Label(Button_Frame, text="Brush size is : 1    px")
     tell_label.grid(row=3, column=0,)
     
 
